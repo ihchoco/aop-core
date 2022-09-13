@@ -1,16 +1,11 @@
 package hello.core.service;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
 import hello.core.domain.Member;
 import hello.core.domain.Order;
 import hello.core.repository.MemberRepository;
-import hello.core.repository.MemoryMemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl_bak implements OrderService {
 
     //인터페이스에만 의존하도록 코드 변경(chapter01-잘못된 코드)
     //private final DiscountPolicy discountPolicy = new FixDiscountPolicy(); //원래는 FixDiscountPolicy가 오든 RateDiscountPolicy가 오든 상관없이 인터페이스(DiscountPolicy)에 해당하는 부분만 자동으로 주입되게 만들어줘야한다. chapter01 잘못된코드 : OCP, DIP 위반
@@ -23,13 +18,12 @@ public class OrderServiceImpl implements OrderService {
     private MemberRepository memberRepository;
     private DiscountPolicy discountPolicy;
 
-    @Autowired //@Autowired 를 사용하면 생성자에서 여러 의존관계도 한번에 주입받을 수 있다.
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl_bak(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
 
-    public OrderServiceImpl(DiscountPolicy discountPolicy) {
+    public OrderServiceImpl_bak(DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
     }
 
