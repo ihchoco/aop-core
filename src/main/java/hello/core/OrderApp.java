@@ -7,19 +7,17 @@ import hello.core.service.MemberService;
 import hello.core.service.MemberServiceImpl;
 import hello.core.service.OrderService;
 import hello.core.service.OrderServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class OrderApp {
     public static void main(String[] args) {
 
-        //인터페이스에만 의존하도록 코드 변경(chapter01-잘못된 코드)
-        //MemberService memberService = new MemberServiceImpl();
-        //OrderService orderService = new OrderServiceImpl();
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        //AppConfig에서 만들어진 memberService를 가져와서 주입시켜준다.(이전에는 구현체를 직접 클라이언트 코드에 입력하였지만 지금은 AppConfig에서 알아서 필요한걸로 셋팅해서 주입하는걸로 바꾸었음)
-        AppConfig appConfig = new AppConfig();
-        MemberService memberService = appConfig.memberService();;
-        OrderService orderService = appConfig.orderService();
+        MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
 
+        OrderService orderService = applicationContext.getBean("orderService", OrderService.class);
 
         long memberId = 1L;
 
